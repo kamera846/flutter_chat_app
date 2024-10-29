@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "600606233682",
+    "firebase_url": "https://my-testing-project-17d76-default-rtdb.firebaseio.com",
+    "project_id": "my-testing-project-17d76",
+    "storage_bucket": "my-testing-project-17d76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600606233682:android:2015e27870e38cccfc3b8b",
+        "android_client_info": {
+          "package_name": "com.example.flutter_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaM2v29FPiCLgEPMWyVrVd0ht3PUYJ4vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600606233682:android:0aba19040ba2b8d6fc3b8b",
+        "android_client_info": {
+          "package_name": "com.example.myremoteconfigapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaM2v29FPiCLgEPMWyVrVd0ht3PUYJ4vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
