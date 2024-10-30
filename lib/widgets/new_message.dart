@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/methods/push_notification_service.dart';
+
+final db = FirebaseFirestore.instance;
 
 class NewMessage extends StatefulWidget {
   const NewMessage({super.key});
@@ -29,18 +32,24 @@ class _NewMessageState extends State<NewMessage> {
     FocusScope.of(context).unfocus();
 
     final user = FirebaseAuth.instance.currentUser!;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get();
+    final userData = await db.collection('users').doc(user.uid).get();
 
-    FirebaseFirestore.instance.collection('chat').add({
+    db.collection('chat').add({
       'text': enteredMessage,
       'created_at': Timestamp.now(),
       'userId': user.uid,
       'username': userData.data()!['username'],
       'userImage': userData.data()!['image_url'],
     });
+
+    final userTaget =
+        await db.collection('users').doc('60MbRPnCmHMrdESr88ctou2xCgl2').get();
+    if (mounted) {
+      await PushNotificationService.sendNotificationToSelectedDriver(
+        userTaget.data()!['fcmToken'],
+        context,
+      );
+    }
   }
 
   @override

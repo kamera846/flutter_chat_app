@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,11 @@ class _ChatScreenState extends State<ChatScreen> {
     await fcm.requestPermission();
 
     fcm.subscribeToTopic('chat');
+    final token = await fcm.getToken();
+    final user = FirebaseAuth.instance.currentUser!;
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'fcmToken': token,
+    }, SetOptions(merge: true));
   }
 
   @override
