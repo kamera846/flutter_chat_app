@@ -42,11 +42,17 @@ class _NewMessageState extends State<NewMessage> {
       'userImage': userData.data()!['image_url'],
     });
 
-    final userTaget =
-        await db.collection('users').doc('60MbRPnCmHMrdESr88ctou2xCgl2').get();
+    // final userTaget =
+    //     await db.collection('users').doc('60MbRPnCmHMrdESr88ctou2xCgl2').get();
 
-    await PushNotificationService.sendNotificationToSelectedDriver(
-      deviceToken: userTaget.data()!['fcmToken'],
+    // await PushNotificationService.sendNotificationToSelectedDriver(
+    //   deviceToken: userTaget.data()!['fcmToken'],
+    //   title: userData.data()!['username'],
+    //   body: enteredMessage,
+    // );
+
+    await PushNotificationService.sendNotificationToSelectedTopic(
+      topic: 'chat',
       title: userData.data()!['username'],
       body: enteredMessage,
     );

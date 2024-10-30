@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_app/widgets/chat_messages.dart';
 import 'package:flutter_chat_app/widgets/new_message.dart';
 
+final fcm = FirebaseMessaging.instance;
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -14,10 +16,10 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   void setupPushNotifications() async {
-    final fcm = FirebaseMessaging.instance;
     await fcm.requestPermission();
 
     fcm.subscribeToTopic('chat');
+
     final token = await fcm.getToken();
     final user = FirebaseAuth.instance.currentUser!;
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
@@ -39,7 +41,10 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text('Flutter Chat'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await fcm.requestPermission();
+
+              fcm.unsubscribeFromTopic('chat');
               FirebaseAuth.instance.signOut();
             },
             icon: const Icon(Icons.exit_to_app),

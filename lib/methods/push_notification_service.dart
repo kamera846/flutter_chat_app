@@ -75,4 +75,33 @@ class PushNotificationService {
       body: jsonEncode(message),
     );
   }
+
+  static sendNotificationToSelectedTopic({
+    required String topic,
+    required String title,
+    required String body,
+  }) async {
+    final String serverKey = await getAccessToken();
+    String endpointFirebaseCloudMessaging =
+        'https://fcm.googleapis.com/v1/projects/my-testing-project-17d76/messages:send';
+
+    final Map<String, dynamic> message = {
+      'message': {
+        'topic': topic,
+        'notification': {
+          'title': title,
+          'body': body,
+        },
+      }
+    };
+
+    await http.post(
+      Uri.parse(endpointFirebaseCloudMessaging),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $serverKey',
+      },
+      body: jsonEncode(message),
+    );
+  }
 }
