@@ -47,8 +47,11 @@ class PushNotificationService {
     return credentials.accessToken.data;
   }
 
-  static sendNotificationToSelectedDriver(
-      String deviceToken, BuildContext context) async {
+  static sendNotificationToSelectedDriver({
+    required String deviceToken,
+    required String title,
+    required String body,
+  }) async {
     final String serverKey = await getAccessToken();
     String endpointFirebaseCloudMessaging =
         'https://fcm.googleapis.com/v1/projects/my-testing-project-17d76/messages:send';
@@ -57,13 +60,13 @@ class PushNotificationService {
       'message': {
         'token': deviceToken,
         'notification': {
-          'title': 'Http Push Notification',
-          'body': 'Test push fcm notification using http'
+          'title': title,
+          'body': body,
         },
       }
     };
 
-    final response = await http.post(
+    await http.post(
       Uri.parse(endpointFirebaseCloudMessaging),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -71,11 +74,5 @@ class PushNotificationService {
       },
       body: jsonEncode(message),
     );
-
-    if (response.statusCode == 200) {
-      print('Notification sent successfully.');
-    } else {
-      print('Failed, Notification not sent with code: ${response.statusCode}');
-    }
   }
 }

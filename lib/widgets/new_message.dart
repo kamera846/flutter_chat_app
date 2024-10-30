@@ -44,12 +44,12 @@ class _NewMessageState extends State<NewMessage> {
 
     final userTaget =
         await db.collection('users').doc('60MbRPnCmHMrdESr88ctou2xCgl2').get();
-    if (mounted) {
-      await PushNotificationService.sendNotificationToSelectedDriver(
-        userTaget.data()!['fcmToken'],
-        context,
-      );
-    }
+
+    await PushNotificationService.sendNotificationToSelectedDriver(
+      deviceToken: userTaget.data()!['fcmToken'],
+      title: userData.data()!['username'],
+      body: enteredMessage,
+    );
   }
 
   @override
